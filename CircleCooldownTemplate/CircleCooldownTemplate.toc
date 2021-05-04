@@ -1,0 +1,7 @@
+## Interface: 30300
+## LoadOnDemand: 0
+## Title: CircleCooldownFrameTemplate
+## Author: RomanSpector & Atom
+## Version: 1.0
+
+CircleCooldownTemplatexml
