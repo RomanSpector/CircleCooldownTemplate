@@ -4,4 +4,4 @@
 ## Author: RomanSpector & Atom
 ## Version: 1.0
 
-CircleCooldownTemplatexml
+CircleCooldownTemplate.xml

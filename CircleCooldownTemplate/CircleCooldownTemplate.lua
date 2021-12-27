@@ -42,11 +42,11 @@ function Mixin(object, ...)
 			object[k] = v;
 		end
 	end
-	return object
+	return object;
 end
 
 function CreateFromMixins(...)
-	return Mixin({}, ...)
+	return Mixin({}, ...);
 end
 
 local function WrapTextInColorCode(text, colorHexString)
@@ -77,7 +77,7 @@ function CircleCooldownMixin:SetAtlas(atlasName)
 end
 
 function CircleCooldownMixin:SetReverse(boolean)
-    self.IsRevers = boolean
+    self.IsRevers = boolean;
 end
 
 function CircleCooldownMixin:Clear()
@@ -92,7 +92,7 @@ function CircleCooldownMixin:Clear()
 end
 
 function CircleCooldownMixin:IsPaused()
-    return self.Pause
+    return self.Pause;
 end
 
 function CircleCooldownMixin:Pause()
@@ -121,19 +121,19 @@ function CircleCooldownMixin:SetCooldown(start, duration, modRate) -- modRate? L
 end
 
 function CircleCooldownMixin:GetCooldown()
-    return self.start, self.duration, not self:IsPaused()
+    return self.start, self.duration, not self:IsPaused();
 end
 
 function CircleCooldownMixin:GetRotation()
-    return self.rotation
+    return self.rotation;
 end
 
 function CircleCooldownMixin:GetCooldownDuration()
-    return self.timeRemaining
+    return self.timeRemaining;
 end
 
 function CircleCooldownMixin:GetCooldownTimes()
-    return self.start, self.duration
+    return self.start, self.duration;
 end
 
 function CircleCooldownMixin:UseColorText(value)
@@ -158,19 +158,19 @@ function CircleCooldownMixin:SetText(seconds)
     local text;
 
     if ( seconds  > 3600 ) then
-        text = WrapTextInColorCode(string.format("%.fh", hours),  self.textFormatted and "b2b2b2" or colorHexString)
+        text = WrapTextInColorCode(string.format("%.fh", hours),  self.textFormatted and "b2b2b2" or colorHexString);
         self:SetFormattedText("%s", text);
     elseif ( seconds > 60 ) then
-        text = WrapTextInColorCode(string.format("%.fm", minutes), self.textFormatted and "ffffff" or colorHexString)
+        text = WrapTextInColorCode(string.format("%.fm", minutes), self.textFormatted and "ffffff" or colorHexString);
         self:SetFormattedText("%s", text);
     elseif ( seconds > 5 ) then
-        text = WrapTextInColorCode(string.format("%.f", sec), self.textFormatted and "ffff00" or colorHexString)
+        text = WrapTextInColorCode(string.format("%.f", sec), self.textFormatted and "ffff00" or colorHexString);
         self:SetFormattedText("%s", text);
     elseif (seconds > 2 ) then
-        text = WrapTextInColorCode(string.format("%.f", sec), self.textFormatted and "ff0000" or colorHexString)
+        text = WrapTextInColorCode(string.format("%.f", sec), self.textFormatted and "ff0000" or colorHexString);
         self:SetFormattedText("%s", text);
     else
-        text = WrapTextInColorCode(string.format("%.1f", sec), self.textFormatted and"ff0000" or colorHexString)
+        text = WrapTextInColorCode(string.format("%.1f", sec), self.textFormatted and"ff0000" or colorHexString);
         self:SetFormattedText("%s", text);
     end
 end
@@ -224,19 +224,19 @@ function CircleCooldownMixin:SetSwipeColor(r, g, b, a)
 end
 
 function CircleCooldownMixin:GetDrawEdge()
-    return self.IsEdge
+    return self.IsEdge;
 end
 
 function CircleCooldownMixin:GetDrawBling()
-    return self.IsBling
+    return self.IsBling;
 end
 
 function CircleCooldownMixin:GetDrawSwipe()
-    return self.IsSwipe
+    return self.IsSwipe;
 end
 
 function CircleCooldownMixin:GetEdgeScale()
-    return self.Edge:GetScale()
+    return self.Edge:GetScale();
 end
 
 function CircleCooldownFrame_Set(self, start, duration, enable, forceShowDrawEdge, modRate)
