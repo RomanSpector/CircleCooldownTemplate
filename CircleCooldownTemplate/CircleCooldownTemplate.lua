@@ -56,6 +56,23 @@ function CircleCooldownControlFrame_OnUpdate(controlFrame, ...)
 	CircleCooldownFrame_OnUpdate(controlFrame:GetParent(), ...);
 end
 
+function CircleCooldownFrame_SetCooldown(self, start, duration, modRate)
+	self.start = start;
+    self.duration = duration;
+    self.timeRemaining = (start + duration) - GetTime();
+    self.fadeTime = 1.2;
+    self.Pause = false;
+    self:Show();
+
+    if self.Bling.texture.Anim:IsPlaying() then
+        self.Bling.texture.Anim:Stop();
+
+        self.Cooldown:SetAlpha(1);
+        self.TimerText:SetAlpha(1);
+        self.Edge:SetAlpha(1);
+    end
+end
+
 function Mixin(object, ...)
 	for i = 1, select("#", ...) do
 		local mixin = select(i, ...);
@@ -126,20 +143,7 @@ function CircleCooldownMixin:Resume()
 end
 
 function CircleCooldownMixin:SetCooldown(start, duration, modRate) -- modRate? LoL
-    self.start = start;
-    self.duration = duration;
-    self.timeRemaining = (start + duration) - GetTime();
-    self.fadeTime = 1.2;
-    self.Pause = false;
-    self:Show();
-
-    if self.Bling.texture.Anim:IsPlaying() then
-        self.Bling.texture.Anim:Stop();
-
-        self.Cooldown:SetAlpha(1);
-        self.TimerText:SetAlpha(1);
-        self.Edge:SetAlpha(1);
-    end
+	CircleCooldownFrame_SetCooldown(self, start, duration, modRate);
 end
 
 function CircleCooldownMixin:GetCooldown()

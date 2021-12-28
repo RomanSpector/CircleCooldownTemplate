@@ -3,5 +3,6 @@
 ## Title: CircleCooldownFrameTemplate
 ## Author: RomanSpector & Atom
 ## Version: 1.0
+## OptionalDeps: OmniCC
 
 CircleCooldownTemplate.xml
