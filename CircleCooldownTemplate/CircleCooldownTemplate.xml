@@ -64,13 +64,15 @@
           </Layer>
         </Layers>
       </Frame>
+	  
+	  <Frame>
+		<Scripts>
+		  <OnLoad function="CircleCooldownControlFrame_OnLoad" />
+		  <OnUpdate function="CircleCooldownControlFrame_OnUpdate" />
+		</Scripts>
+	  </Frame>
     </Frames>
-    <Scripts>
-      <OnLoad>
-        CircleCooldown_OnLoad(self);
-      </OnLoad>
-      <OnUpdate function="CircleCooldownFrame_OnUpdate" />
-    </Scripts>
+    
 	<Attributes>
 		<Attribute name="drawEdge" type="boolean" value="false" />
 		<Attribute name="drawBling" type="boolean" value="true" />

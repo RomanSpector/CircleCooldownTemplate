@@ -43,12 +43,17 @@ local function SetFrameVisible(frame, visible)
 	end
 end
 
-function CircleCooldown_OnLoad(self)
+function CircleCooldownControlFrame_OnLoad(controlFrame)
+	local self = controlFrame:GetParent();
 	Mixin(self, CircleCooldownMixin);
 	self:SetDrawEdge(self:GetAttribute("drawEdge"));
 	self:SetDrawBling(self:GetAttribute("drawBling"));
 	self:SetDrawSwipe(self:GetAttribute("drawSwipe"));
 	self.IsReverse = self:GetAttribute("reverse");
+end
+
+function CircleCooldownControlFrame_OnUpdate(controlFrame, ...)
+	CircleCooldownFrame_OnUpdate(controlFrame:GetParent(), ...);
 end
 
 function Mixin(object, ...)
