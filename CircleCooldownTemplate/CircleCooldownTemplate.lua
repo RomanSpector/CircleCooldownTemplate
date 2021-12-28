@@ -123,7 +123,7 @@ end
 function CircleCooldownMixin:SetCooldown(start, duration, modRate) -- modRate? LoL
     self.start = start;
     self.duration = duration;
-    self.timeRemaining = duration;
+    self.timeRemaining = (start + duration) - GetTime();
     self.fadeTime = 1.2;
     self.Pause = false;
     self:Show();
