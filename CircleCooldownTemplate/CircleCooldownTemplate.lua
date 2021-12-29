@@ -102,11 +102,11 @@ function CircleCooldownMixin:SetAtlas(atlasName)
 
     if atlas then
         if self:GetReverse() then
-            left, right, top, bottom = unpack(AtlasInfo[399 - atlasName])
-            self.Cooldown.texture:SetTexCoord(left, right, bottom, top);
-        else
             left, right, top, bottom = unpack(atlas)
             self.Cooldown.texture:SetTexCoord(right, left, bottom, top);
+        else
+            left, right, top, bottom = unpack(AtlasInfo[399 - atlasName])
+            self.Cooldown.texture:SetTexCoord(left, right, bottom, top);
         end
     end
 end
