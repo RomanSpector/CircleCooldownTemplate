@@ -1,8 +1,8 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
-
   <Script file="CircleCooldownTemplate.lua" />
+  <Script file="OmniCCSupport.lua" />
 
   <Frame name="CircleCooldownFrameTemplate" hidden="true" setAllPoints="true" virtual="true">
     <Frames>
@@ -14,7 +14,7 @@
         </Layers>
       </Frame>
 
-      <Frame parentKey="Edge" setAllPoints="true">
+      <Frame parentKey="Edge" setAllPoints="true" hidden="true">
         <Layers>
           <Layer level="ARTWORK">
             <Texture file="Interface\AddOns\CircleCooldownTemplate\Cooldown\edge" parentKey="texture" setAllPoints="true" />
@@ -22,7 +22,7 @@
         </Layers>
       </Frame>
 
-      <Frame parentKey="Bling" setAllPoints="true">
+      <Frame parentKey="Bling" setAllPoints="true" hidden="true">
         <Layers>
           <Layer level="ARTWORK">
             <Texture file="Interface\Cooldown\star4" alphaMode="ADD" parentKey="texture" setAllPoints="true" alpha="0">
@@ -65,14 +65,21 @@
           </Layer>
         </Layers>
       </Frame>
+	  
+	  <Frame>
+		<Scripts>
+		  <OnLoad function="CircleCooldownControlFrame_OnLoad" />
+		  <OnUpdate function="CircleCooldownControlFrame_OnUpdate" />
+		</Scripts>
+	  </Frame>
     </Frames>
-
-    <Scripts>
-      <OnLoad>
-        Mixin(self, CircleCooldownMixin);
-      </OnLoad>
-      <OnUpdate function="CircleCooldownFrame_OnUpdate" />
-    </Scripts>
+    
+	<Attributes>
+		<Attribute name="drawEdge" type="boolean" value="false" />
+		<Attribute name="drawBling" type="boolean" value="true" />
+		<Attribute name="drawSwipe" type="boolean" value="true" />
+		<Attribute name="reverse" type="boolean" value="true" />
+	</Attributes>
   </Frame>
 
 </Ui>

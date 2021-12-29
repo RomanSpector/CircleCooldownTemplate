@@ -35,6 +35,44 @@ for i = 0, 399 do
     AtlasInfo[i] = {left, right, top, bottom};
 end
 
+local function SetFrameVisible(frame, visible)
+	if visible then
+		frame:Show()
+	else
+		frame:Hide()
+	end
+end
+
+function CircleCooldownControlFrame_OnLoad(controlFrame)
+	local self = controlFrame:GetParent();
+	Mixin(self, CircleCooldownMixin);
+	self:SetDrawEdge(self:GetAttribute("drawEdge"));
+	self:SetDrawBling(self:GetAttribute("drawBling"));
+	self:SetDrawSwipe(self:GetAttribute("drawSwipe"));
+	self.IsReverse = self:GetAttribute("reverse");
+end
+
+function CircleCooldownControlFrame_OnUpdate(controlFrame, ...)
+	CircleCooldownFrame_OnUpdate(controlFrame:GetParent(), ...);
+end
+
+function CircleCooldownFrame_SetCooldown(self, start, duration, modRate)
+	self.start = start;
+    self.duration = duration;
+    self.timeRemaining = (start + duration) - GetTime();
+    self.fadeTime = 1.2;
+    self.Pause = false;
+    self:Show();
+
+    if self.Bling.texture.Anim:IsPlaying() then
+        self.Bling.texture.Anim:Stop();
+
+        self.Cooldown:SetAlpha(1);
+        self.TimerText:SetAlpha(1);
+        self.Edge:SetAlpha(1);
+    end
+end
+
 function Mixin(object, ...)
 	for i = 1, select("#", ...) do
 		local mixin = select(i, ...);
@@ -54,10 +92,7 @@ local function WrapTextInColorCode(text, colorHexString)
 end
 
 CircleCooldownMixin = {};
-CircleCooldownMixin.IsEdge = false;
-CircleCooldownMixin.IsRevers = true;
-CircleCooldownMixin.IsBling = true;
-CircleCooldownMixin.IsSwipe = true;
+CircleCooldownMixin.IsReverse = false;
 CircleCooldownMixin.textFormatted = true;
 CircleCooldownMixin.IsShownText = false;
 
@@ -66,7 +101,7 @@ function CircleCooldownMixin:SetAtlas(atlasName)
     local left, right, top, bottom;
 
     if atlas then
-        if self.IsRevers then
+        if self:GetReverse() then
             left, right, top, bottom = unpack(AtlasInfo[399 - atlasName])
             self.Cooldown.texture:SetTexCoord(left, right, bottom, top);
         else
@@ -76,8 +111,12 @@ function CircleCooldownMixin:SetAtlas(atlasName)
     end
 end
 
+function CircleCooldownMixin:GetReverse()
+    return self.IsReverse;
+end 
+
 function CircleCooldownMixin:SetReverse(boolean)
-    self.IsRevers = boolean;
+    self.IsReverse = boolean;
 end
 
 function CircleCooldownMixin:Clear()
@@ -104,20 +143,7 @@ function CircleCooldownMixin:Resume()
 end
 
 function CircleCooldownMixin:SetCooldown(start, duration, modRate) -- modRate? LoL
-    self.start = start;
-    self.duration = duration;
-    self.timeRemaining = duration;
-    self.fadeTime = 1.2;
-    self.Pause = false;
-    self:Show();
-
-    if self.Bling.texture.Anim:IsPlaying() then
-        self.Bling.texture.Anim:Stop();
-
-        self.Cooldown:SetAlpha(1);
-        self.TimerText:SetAlpha(1);
-        self.Edge:SetAlpha(1);
-    end
+	CircleCooldownFrame_SetCooldown(self, start, duration, modRate);
 end
 
 function CircleCooldownMixin:GetCooldown()
@@ -180,23 +206,11 @@ function CircleCooldownMixin:SetFormattedText(format, text)
 end
 
 function CircleCooldownMixin:SetDrawEdge(enable)
-    if enable then
-        self.Edge:Show();
-        self.IsEdge = true;
-    else
-        self.Edge:Hide();
-        self.IsEdge = false;
-    end
+    SetFrameVisible(self.Edge, enable)
 end
 
 function CircleCooldownMixin:SetDrawBling(enable)
-    if enable then
-        self.Bling:Show();
-        self.Bling = true;
-    else
-        self.Bling:Hide();
-        self.Bling = false;
-    end
+    SetFrameVisible(self.Bling, enable)
 end
 
 function CircleCooldownMixin:SetBlingTexture(file, r, g, b, a)
@@ -205,13 +219,7 @@ function CircleCooldownMixin:SetBlingTexture(file, r, g, b, a)
 end
 
 function CircleCooldownMixin:SetDrawSwipe(enable)
-    if enable then
-        self.Cooldown:Hide();
-        self.IsSwipe = false;
-    else
-        self.Cooldown:Hide();
-        self.IsSwipe = true;
-    end
+    SetFrameVisible(self.Cooldown, enable);
 end
 
 function CircleCooldownMixin:SetSwipeTexture(file, r, g, b, a)
@@ -224,15 +232,15 @@ function CircleCooldownMixin:SetSwipeColor(r, g, b, a)
 end
 
 function CircleCooldownMixin:GetDrawEdge()
-    return self.IsEdge;
+    return self.Edge:IsVisible();
 end
 
 function CircleCooldownMixin:GetDrawBling()
-    return self.IsBling;
+    return self.Bling:IsVisible();
 end
 
 function CircleCooldownMixin:GetDrawSwipe()
-    return self.IsSwipe;
+    return self.Cooldown:IsVisible();
 end
 
 function CircleCooldownMixin:GetEdgeScale()
