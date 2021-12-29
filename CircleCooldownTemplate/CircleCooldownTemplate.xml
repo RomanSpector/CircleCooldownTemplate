@@ -4,7 +4,7 @@
   <Script file="CircleCooldownTemplate.lua" />
   <Script file="OmniCCSupport.lua" />
 
-  <Frame name="CircleCooldownFrameTemplate" hidden="true" setAllPoints="true" virtual="true">
+  <Frame name="CircleCooldownFrameTemplate" hidden="true" virtual="true">
     <Frames>
       <Frame parentKey="Cooldown" setAllPoints="true">
         <Layers>
