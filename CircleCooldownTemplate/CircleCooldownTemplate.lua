@@ -307,6 +307,6 @@ function CircleCooldownFrame_OnUpdate(self, elapsed)
             self.Bling.texture.Anim:Play();
         end
     else
-        self:Hide();
+        --self:Hide();
     end
 end
