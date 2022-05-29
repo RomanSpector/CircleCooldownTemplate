@@ -14,12 +14,34 @@
         </Layers>
       </Frame>
 
-      <Frame parentKey="Edge" setAllPoints="true" hidden="true">
+      <Frame parentKey="Edge" hidden="true" setAllPoints="true">
         <Layers>
           <Layer level="ARTWORK">
-            <Texture file="Interface\AddOns\CircleCooldownTemplate\Cooldown\edge" parentKey="texture" setAllPoints="true" />
+            <Texture file="Interface\AddOns\CircleCooldownTemplate\Cooldown\ClockLeg" parentKey="texture">
+				<Color a="1" r="1" g="1" b="0" />
+			</Texture>
           </Layer>
         </Layers>
+		<Scripts>
+			<OnShow>
+				local parent = self:GetParent();
+				
+				local width, height = parent:GetSize()
+				
+				if width == nil then
+					width = parent:GetRight() - parent:GetLeft();
+				end
+				
+				if height == nil then
+					height = parent:GetBottom() - parent:GetTop();
+				end
+				
+				self:SetSize(width * 2, height * 2)
+			</OnShow>
+		</Scripts>
+		<Anchors>
+            <Anchor point="CENTER" relativePoint="CENTER" />
+        </Anchors>
       </Frame>
 
       <Frame parentKey="Bling" setAllPoints="true" hidden="true">
